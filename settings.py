@@ -1,3 +1,8 @@
+# Game State
 SCREEN_SIZE = 900
-
 BOX_SIZE = SCREEN_SIZE // 3
+FPS = 30
+
+# Colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
