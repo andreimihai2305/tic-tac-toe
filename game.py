@@ -1,4 +1,3 @@
-from platform import python_branch
 import pygame
 from sys import exit
 from settings import *
@@ -15,8 +14,25 @@ class Game:
         # Initializing game components
         self.clock = pygame.time.Clock()
         self.table = Table()
+        self.current_player = -1
 
+        self.inner_table = [
+            ['-', '-', '-'],
+            ['-', '-', '-'],
+            ['-', '-', '-']
+        ]
+
+
+    def handle_turn(self, square) -> None:
+
+        # Update game board
+        row, col = square
+        self.inner_table[row][col] = "X" if self.current_player == -1 else "O"
+
+        # Change player after turn end
+        self.current_player *= -1
     
+
     def __call__(self) -> None:
         self.run()
     
@@ -31,7 +47,11 @@ class Game:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     square = self.table.get_square_from_pos(pos)
+                    
+                    print("Current player: ", "X" if self.current_player == -1 else "O")
                     print(square)
+                    self.handle_turn(square)
+
 
                     
 
