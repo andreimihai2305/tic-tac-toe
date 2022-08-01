@@ -1,7 +1,7 @@
 import pygame, math
 from settings import *
 
-class Table:
+class Board:
 
     def __init__(self) -> None:
         self.display = pygame.display.get_surface()

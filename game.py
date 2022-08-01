@@ -1,7 +1,7 @@
 import pygame
 from sys import exit
 from settings import *
-from table import Table
+from board import Board
 
 class Game:
     def __init__(self) -> None:
@@ -13,7 +13,7 @@ class Game:
 
         # Initializing game components
         self.clock = pygame.time.Clock()
-        self.table = Table()
+        self.table = Board()
         self.current_player = -1
 
         self.inner_table = [
