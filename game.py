@@ -13,7 +13,7 @@ class Game:
 
         # Initializing game components
         self.clock = pygame.time.Clock()
-        self.table = Board()
+        self.board = Board()
         self.current_player = -1
 
         self.inner_table = [
@@ -21,6 +21,10 @@ class Game:
             ['-', '-', '-'],
             ['-', '-', '-']
         ]
+
+
+    def __call__(self) -> None:
+        self.run()
 
 
     def handle_turn(self, square) -> None:
@@ -36,9 +40,6 @@ class Game:
             # Change player after turn end
             self.current_player *= -1
     
-
-    def __call__(self) -> None:
-        self.run()
     
 
     def run(self) -> None:
@@ -61,7 +62,7 @@ class Game:
 
             self.display.fill(BLACK)
 
-            self.table.draw()
+            self.board.draw()
             
             pygame.display.update()
             self.clock.tick(FPS)
