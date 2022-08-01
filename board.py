@@ -1,5 +1,8 @@
-import pygame, math
+import pygame
+import math
 from settings import *
+
+
 
 class Board:
 
@@ -7,12 +10,19 @@ class Board:
         self.display = pygame.display.get_surface()
         self.board = board
 
+
+    # Used to syncronize the visual board with game board
     def update(self, new_board) -> None:
         self.board = new_board
 
+
     def draw_x(self, x, y):
-        pygame.draw.line(self.display, WHITE, (y * BOX_SIZE, x * BOX_SIZE), ((y + 1) * BOX_SIZE, (x + 1) * BOX_SIZE))
-        pygame.draw.line(self.display, WHITE, ((y + 1) * BOX_SIZE, x * BOX_SIZE), (y * BOX_SIZE, (x + 1) * BOX_SIZE))
+        pygame.draw.line(self.display, WHITE, (x * BOX_SIZE + 20, y * BOX_SIZE + 20), ((x + 1) * BOX_SIZE - 20, (y + 1) * BOX_SIZE - 20))
+        pygame.draw.line(self.display, WHITE, ((x + 1) * BOX_SIZE - 20, y * BOX_SIZE + 20), (x * BOX_SIZE + 20, (y + 1) * BOX_SIZE - 20))
+
+
+    def draw_o(self, x, y):
+        pygame.draw.circle(self.display, WHITE, ((x * BOX_SIZE) + (BOX_SIZE // 2), (y * BOX_SIZE) + (BOX_SIZE // 2)), (BOX_SIZE // 2) - 20, 2)
 
 
     def draw(self) -> None:
@@ -27,9 +37,10 @@ class Board:
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
                 if self.board[i][j] == "X":
-                    self.draw_x(i, j)
+                    self.draw_x(j, i)
                     
-
+                elif self.board[i][j] == "O":
+                    self.draw_o(j, i)
 
 
     def get_square_from_pos(self, pos: tuple[int, int]) -> tuple[int, int]:

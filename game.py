@@ -3,7 +3,10 @@ from sys import exit
 from settings import *
 from board import Board
 
+
+
 class Game:
+
     def __init__(self) -> None:
         pygame.init()
 
@@ -19,8 +22,10 @@ class Game:
         ]
         self.clock = pygame.time.Clock()
         self.board: Board = Board(self.inner_table)
-        self.current_player: int = -1
 
+        # Game Information
+        self.winner = None
+        self.current_player: int = -1
 
 
     def __call__(self) -> None:
@@ -38,16 +43,12 @@ class Game:
             self.inner_table[row][col] = "X" if self.current_player == -1 else "O"
             self.board.update(self.inner_table)
             
-
             # Change player after turn end
             self.current_player *= -1
             
-    
-
-
-
 
     def run(self) -> None:
+
         # Main game loop
         print("Current player: ", "X" if self.current_player == -1 else "O")
         while True:
