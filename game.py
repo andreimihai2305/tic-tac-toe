@@ -27,10 +27,14 @@ class Game:
 
         # Update game board
         row, col = square
-        self.inner_table[row][col] = "X" if self.current_player == -1 else "O"
+        if self.inner_table[row][col] != '-':
+            print("Square is already a " + self.inner_table[row][col])
 
-        # Change player after turn end
-        self.current_player *= -1
+        else:
+            self.inner_table[row][col] = "X" if self.current_player == -1 else "O"
+
+            # Change player after turn end
+            self.current_player *= -1
     
 
     def __call__(self) -> None:
@@ -45,11 +49,11 @@ class Game:
                     pygame.quit()
                     exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
+                    print("Current player: ", "X" if self.current_player == -1 else "O")
+                    
                     pos = pygame.mouse.get_pos()
                     square = self.table.get_square_from_pos(pos)
                     
-                    print("Current player: ", "X" if self.current_player == -1 else "O")
-                    print(square)
                     self.handle_turn(square)
 
 
