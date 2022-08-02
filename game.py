@@ -10,7 +10,7 @@ class Game:
     def __init__(self) -> None:
         pygame.init()
         # Initializing game components
-        self.inner_board: list[list] = [
+        self.board: list[list] = [
             ['-', '-', '-'],
             ['-', '-', '-'],
             ['-', '-', '-']
@@ -24,9 +24,9 @@ class Game:
         # Initializing and drawing window
         self.display = pygame.display.set_mode((SCREEN_SIZE, SCREEN_SIZE))
         pygame.display.set_caption("Tic Tac Toe")
-        self.board: Board = Board(self.inner_board)
+        self.game_board: Board = Board(self.board)
         self.display.fill(BLACK)
-        self.board.draw()
+        self.game_board.draw()
 
 
 
@@ -38,19 +38,18 @@ class Game:
 
         # Update game board
         row, col = square
-        if self.inner_board[row][col] != '-':
-            print("Square is already a " + self.inner_board[row][col])
+        if self.board[row][col] != '-':
+            print("Square is already a " + self.board[row][col])
 
         else:
-            self.inner_board[row][col] = "X" if self.current_player == -1 else "O"
-            self.board.update(self.inner_board)
+            self.board[row][col] = "X" if self.current_player == -1 else "O"
+            self.game_board.update(self.board)
             
             # Change player after turn end
             self.current_player *= -1
-            
+
 
     def run(self) -> None:
-
         # Main game loop
         print("Current player: ", "X" if self.current_player == -1 else "O")
         while True:
@@ -61,20 +60,20 @@ class Game:
                     exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
-                    square = self.board.get_square_from_pos(pos)
+                    square = self.game_board.get_square_from_pos(pos)
                     
                     self.handle_turn(square)
                     
                     print("Current player: ", "X" if self.current_player == -1 else "O")
 
 
-            for i in range(len(self.inner_board)):
-                for j in range(len(self.inner_board[i])):
-                    if self.inner_board[i][j] == "X":
-                        self.board.draw_x(j, i)
+            for i in range(len(self.board)):
+                for j in range(len(self.board[i])):
+                    if self.board[i][j] == "X":
+                        self.game_board.draw_x(j, i)
                     
-                    elif self.inner_board[i][j] == "O":
-                        self.board.draw_o(j, i)
+                    elif self.board[i][j] == "O":
+                        self.game_board.draw_o(j, i)
                     
 
     
