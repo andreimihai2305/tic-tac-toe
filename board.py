@@ -34,13 +34,7 @@ class Board:
         pygame.draw.line(self.display, WHITE, (0, BOX_SIZE), (SCREEN_SIZE, BOX_SIZE)) 
         pygame.draw.line(self.display, WHITE, (0, BOX_SIZE * 2), (SCREEN_SIZE, BOX_SIZE * 2)) 
 
-        for i in range(len(self.board)):
-            for j in range(len(self.board[i])):
-                if self.board[i][j] == "X":
-                    self.draw_x(j, i)
-                    
-                elif self.board[i][j] == "O":
-                    self.draw_o(j, i)
+
 
 
     def get_square_from_pos(self, pos: tuple[int, int]) -> tuple[int, int]:
