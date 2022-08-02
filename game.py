@@ -10,9 +10,12 @@ class Game:
     def __init__(self) -> None:
         pygame.init()
 
-        # Initializing window
+        # Initializing and drawing window
         self.display = pygame.display.set_mode((SCREEN_SIZE, SCREEN_SIZE))
         pygame.display.set_caption("Tic Tac Toe")
+        self.board: Board = Board(self.inner_table)
+        self.display.fill(BLACK)
+        self.board.draw()
 
         # Initializing game components
         self.inner_table: list[list] = [
@@ -21,7 +24,6 @@ class Game:
             ['-', '-', '-']
         ]
         self.clock = pygame.time.Clock()
-        self.board: Board = Board(self.inner_table)
 
         # Game Information
         self.winner = None
@@ -68,10 +70,6 @@ class Game:
 
                     
 
-            
-            self.display.fill(BLACK)
-
-            self.board.draw()
-            
+    
             pygame.display.update()
             self.clock.tick(FPS)
