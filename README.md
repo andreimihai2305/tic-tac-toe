@@ -6,3 +6,5 @@ Simple tic tac toe game where 2 player take turns selecting square where to plac
 
 - Does not support single player
 - Information about the game are diplayed in the command line
+
+In order to reset the game press 'r'.

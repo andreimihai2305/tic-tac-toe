@@ -25,6 +25,7 @@ class Board:
         pygame.draw.circle(self.display, WHITE, ((x * BOX_SIZE) + (BOX_SIZE // 2), (y * BOX_SIZE) + (BOX_SIZE // 2)), (BOX_SIZE // 2) - 20, 2)
 
 
+    # Drawing lines at the end of game
     def draw_win_line_horizontal(self, row: int) -> None:
         pygame.draw.line(self.display, RED, (10, (row * BOX_SIZE) + (BOX_SIZE // 2)), (SCREEN_SIZE - 10, (row * BOX_SIZE) + (BOX_SIZE // 2)), 2)
 
@@ -41,7 +42,7 @@ class Board:
             pygame.draw.line(self.display, RED, (SCREEN_SIZE - 10, 10), (10, SCREEN_SIZE - 10), 4)
 
 
-
+    # Initial board load
     def draw_game_board(self) -> None:
         # Drawing vertical Lines
         pygame.draw.line(self.display, WHITE, (BOX_SIZE, 0), (BOX_SIZE, SCREEN_SIZE))
