@@ -10,12 +10,12 @@ class Game:
     def __init__(self) -> None:
         pygame.init()
         # Initializing game components
+        self.clock = pygame.time.Clock()
         self.board: list[list] = [
             ['-', '-', '-'],
             ['-', '-', '-'],
             ['-', '-', '-']
         ]
-        self.clock = pygame.time.Clock()
 
         # Game Information
         self.winner = None
@@ -36,17 +36,43 @@ class Game:
 
     def handle_turn(self, square) -> None:
 
-        # Update game board
+        
         row, col = square
         if self.board[row][col] != '-':
             print("Square is already a " + self.board[row][col])
 
         else:
+            # Update game board
             self.board[row][col] = "X" if self.current_player == -1 else "O"
+            
+            # Update visual board
             self.game_board.update(self.board)
             
             # Change player after turn end
             self.current_player *= -1
+
+
+    def check_if_game_ended(self) -> None:
+        for i in range(len(self.board)):
+            # Check for horizontal winner
+            if self.board[i][0] == self.board[i][1] == self.board[i][2] and self.board[i][0] != '-':
+                self.winner = "X" if self.board[i][0] == "X" else "O"
+                print("Winner: " + self.winner)
+                break
+            # Check for vertical winner
+            if self.board[0][i] == self.board[1][i] == self.board[2][i] and self.board[0][i] != '-':
+                self.winner = "X" if self.board[0][i] == "X" else "O"
+                print("Winner: " + self.winner)
+                break
+        # Check for diagonal winner
+        else:
+            if self.board[0][0] == self.board[1][1] == self.board[2][2] and self.board[1][1] != '-':
+                self.winner = "X" if self.board[1][1] == "X" else "O"
+                print("Winner: " + self.winner)
+
+            if self.board[0][2] == self.board[1][1] == self.board[2][0] and self.board[1][1] != '-':
+                self.winner = "X" if self.board[1][1] == "X" else "O"
+                print("Winner: " + self.winner)
 
 
     def run(self) -> None:
@@ -59,13 +85,14 @@ class Game:
                     pygame.quit()
                     exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    pos = pygame.mouse.get_pos()
-                    square = self.game_board.get_square_from_pos(pos)
-                    
-                    self.handle_turn(square)
-                    
-                    print("Current player: ", "X" if self.current_player == -1 else "O")
+                    if not self.winner:
+                        pos = pygame.mouse.get_pos()
+                        square = self.game_board.get_square_from_pos(pos)
+                        
+                        self.handle_turn(square)
+                        print("Current player: ", "X" if self.current_player == -1 else "O")
 
+                    self.check_if_game_ended()
 
             for i in range(len(self.board)):
                 for j in range(len(self.board[i])):
