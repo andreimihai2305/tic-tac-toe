@@ -26,7 +26,7 @@ class Game:
         pygame.display.set_caption("Tic Tac Toe")
         self.game_board: Board = Board(self.board)
         self.display.fill(BLACK)
-        self.game_board.draw()
+        self.game_board.draw_game_board()
 
 
 
@@ -57,21 +57,27 @@ class Game:
             # Check for horizontal winner
             if self.board[i][0] == self.board[i][1] == self.board[i][2] and self.board[i][0] != '-':
                 self.winner = "X" if self.board[i][0] == "X" else "O"
+                self.game_board.draw_win_line_horizontal(i)
                 print("Winner: " + self.winner)
                 break
+
             # Check for vertical winner
             if self.board[0][i] == self.board[1][i] == self.board[2][i] and self.board[0][i] != '-':
                 self.winner = "X" if self.board[0][i] == "X" else "O"
+                self.game_board.draw_win_line_vertical(i)
                 print("Winner: " + self.winner)
                 break
+
         # Check for diagonal winner
         else:
             if self.board[0][0] == self.board[1][1] == self.board[2][2] and self.board[1][1] != '-':
                 self.winner = "X" if self.board[1][1] == "X" else "O"
+                self.game_board.draw_win_line_diagonal(-1)
                 print("Winner: " + self.winner)
 
             if self.board[0][2] == self.board[1][1] == self.board[2][0] and self.board[1][1] != '-':
                 self.winner = "X" if self.board[1][1] == "X" else "O"
+                self.game_board.draw_win_line_diagonal(1)
                 print("Winner: " + self.winner)
 
 
@@ -79,11 +85,11 @@ class Game:
         # Main game loop
         print("Current player: ", "X" if self.current_player == -1 else "O")
         while True:
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
+
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if not self.winner:
                         pos = pygame.mouse.get_pos()
@@ -91,8 +97,8 @@ class Game:
                         
                         self.handle_turn(square)
                         print("Current player: ", "X" if self.current_player == -1 else "O")
+                        self.check_if_game_ended()
 
-                    self.check_if_game_ended()
 
             for i in range(len(self.board)):
                 for j in range(len(self.board[i])):
@@ -103,6 +109,5 @@ class Game:
                         self.game_board.draw_o(j, i)
                     
 
-    
-            pygame.display.update()
             self.clock.tick(FPS)
+            pygame.display.flip()
